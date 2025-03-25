@@ -1,7 +1,19 @@
 import time
-from datetime import datetime
+import datetime
+import os
 
-print(f"Current UTC time: {datetime.utcnow()}")  # Debug log
+# System clock ko sync karne ki koshish
+os.system("date")
+
+# Telegram server se exact time sync karna
+from pyrogram import Client
+from pyrogram.raw.functions import Ping
+
+with Client("my_account") as app:
+    app.send(Ping(ping_id=0))
+    print("Telegram time sync successful!")
+
+print(f"Current UTC time: {datetime.datetime.utcnow()}")
 time.sleep(2)  # Small delay before Pyrogram starts
 
 import os
