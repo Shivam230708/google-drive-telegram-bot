@@ -2,35 +2,36 @@ import os
 import logging
 from pyrogram import Client
 from bot import (
-  APP_ID,
-  API_HASH,
-  BOT_TOKEN,
-  DOWNLOAD_DIRECTORY
-  )
+    APP_ID,
+    API_HASH,
+    BOT_TOKEN,
+    DOWNLOAD_DIRECTORY
+)
 
+# Logging Configuration
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger(name)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
+# Create download directory if not exists
+if not os.path.exists(DOWNLOAD_DIRECTORY):
+    os.makedirs(DOWNLOAD_DIRECTORY)
 
-if __name__ == "__main__":
-    if not os.path.isdir(DOWNLOAD_DIRECTORY):
-        os.makedirs(DOWNLOAD_DIRECTORY)
-    plugins = dict(
-        root="bot/plugins"
-    )
+if name == "main":
+    plugins = dict(root="bot/plugins")
+
     app = Client(
         "G-DriveBot",
-        bot_token=BOT_TOKEN,
         api_id=APP_ID,
         api_hash=API_HASH,
+        bot_token=BOT_TOKEN,
         plugins=plugins,
-        parse_mode="markdown",
-        workdir=DOWNLOAD_DIRECTORY
+        parse_mode="markdown"  # Correct parameter name
     )
-    LOGGER.info('Starting Bot !')
+
+    LOGGER.info("Starting Bot...")
     app.run()
-    LOGGER.info('Bot Stopped !')
+    LOGGER.info("Bot Stopped!")
