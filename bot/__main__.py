@@ -2,6 +2,7 @@ import os
 import logging
 import datetime
 import time
+import pytz  # Add this for timezone
 from pyrogram import Client
 from pyrogram.raw.functions import Ping
 from bot.config import Config  # Ensure config.py is properly structured
@@ -24,12 +25,22 @@ DOWNLOAD_DIRECTORY = os.getenv("DOWNLOAD_DIRECTORY", Config.DOWNLOAD_DIRECTORY)
 if not os.path.isdir(DOWNLOAD_DIRECTORY):
     os.makedirs(DOWNLOAD_DIRECTORY)
 
+# **Force Time Sync**
+try:
+    os.system("sudo ntpdate -s time.nist.gov")
+except Exception as e:
+    print("NTP Time Sync Failed, proceeding anyway...")
+
+# **Check and print system time**
+utc_time = datetime.datetime.now(pytz.utc)
+print(f"System UTC Time: {utc_time}")
+
 # Telegram Server Time Sync
 with Client("my_account", api_id=API_ID, api_hash=API_HASH) as app:
     app.send(Ping(ping_id=0))
     print("Telegram time sync successful!")
 
-print(f"Current UTC time: {datetime.datetime.utcnow()}")
+print(f"Current UTC time after sync: {datetime.datetime.utcnow()}")
 time.sleep(2)
 
 # Initialize Pyrogram Bot
