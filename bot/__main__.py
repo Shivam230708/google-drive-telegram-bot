@@ -1,3 +1,9 @@
+import time
+from datetime import datetime
+
+print(f"Current UTC time: {datetime.utcnow()}")  # Debug log
+time.sleep(2)  # Small delay before Pyrogram starts
+
 import os
 import logging
 from pyrogram import Client
