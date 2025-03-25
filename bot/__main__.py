@@ -5,7 +5,7 @@ import time
 import requests  # ✅ Add this line
 from pyrogram import Client
 from pyrogram.raw.functions import Ping
-from bot.config import config
+from bot.config import Config
 
 # Logging setup
 logging.basicConfig(
