@@ -2,10 +2,10 @@ import os
 import logging
 import datetime
 import time
-import requests  # ✅ Add this line
+import requests
 from pyrogram import Client
 from pyrogram.raw.functions import Ping
-from bot.config import Config
+from bot.config import Config as config
 
 # Logging setup
 logging.basicConfig(
@@ -27,12 +27,18 @@ if not os.path.isdir(DOWNLOAD_DIRECTORY):
 # ✅ Fix Time Sync Before Telegram Connect
 def sync_time():
     try:
-        response = requests.get("http://worldtimeapi.org/api/timezone/Etc/UTC")
-        if response.status_code == 200:
-            current_utc = response.json()["utc_datetime"]
-            print(f"✅ Synced UTC Time: {current_utc}")
+        # Attempt to use system time sync
+        if os.system("which ntpdate") == 0:
+            os.system("sudo ntpdate -u pool.ntp.org")
+            print("✅ System time synced using ntpdate.")
         else:
-            print("⚠️ Failed to sync time from API")
+            # Fallback to API time sync
+            response = requests.get("http://worldtimeapi.org/api/timezone/Etc/UTC")
+            if response.status_code == 200:
+                current_utc = response.json()["utc_datetime"]
+                print(f"✅ Synced UTC Time: {current_utc}")
+            else:
+                print("⚠️ Failed to sync time from API")
     except Exception as e:
         print(f"⚠️ Error in time sync: {e}")
 
@@ -40,8 +46,11 @@ sync_time()
 
 # Telegram Server Time Sync
 with Client("my_account", api_id=API_ID, api_hash=API_HASH) as app:
-    app.send(Ping(ping_id=0))
-    print("✅ Telegram time sync successful!")
+    try:
+        app.send(Ping(ping_id=0))
+        print("✅ Telegram time sync successful!")
+    except Exception as e:
+        print(f"⚠️ Telegram time sync failed: {e}")
 
 print(f"📅 Current UTC time: {datetime.datetime.utcnow()}")
 time.sleep(2)
@@ -59,6 +68,6 @@ app = Client(
     workdir=DOWNLOAD_DIRECTORY
 )
 
-LOGGER.info("🚀 Starting Bot...")
+LOGGER.info("Starting Bot...")
 app.run()
-LOGGER.info("🛑 Bot Stopped!")
+LOGGER.info("Bot Stopped!")
