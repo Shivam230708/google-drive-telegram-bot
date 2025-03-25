@@ -15,3 +15,4 @@ ffmpeg
 tenacity
 pytz
 requests
+ntplib
