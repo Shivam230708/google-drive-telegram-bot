@@ -1,10 +1,13 @@
 import os
 
+print("API_ID:", os.getenv("API_ID"))  # Debug ke liye
+print("API_HASH:", os.getenv("API_HASH"))
+
 class config:
     BOT_TOKEN = os.getenv("BOT_TOKEN")
-    API_ID = int(os.getenv("API_ID"))  # API_ID integer hona chahiye
+    API_ID = int(os.getenv("API_ID")) if os.getenv("API_ID") else None  # Ensure it's an integer
     API_HASH = os.getenv("API_HASH")
-    
+
     class config:
     BOT_TOKEN = "7570456143:AAGf0yle57FwtUNM33QdBvYoflTWjCVdivg"
     API_ID = "26079994"
