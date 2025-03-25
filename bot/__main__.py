@@ -1,8 +1,8 @@
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 
-print(f"Current UTC time: {datetime.utcnow()}")  # Debug log
-time.sleep(2)  # Small delay before Pyrogram starts
+print(f"Current UTC time: {datetime.now(timezone.utc)}")  # Debug log
+time.sleep(5)  # Increase sleep to allow time sync
 
 import os
 import logging
