@@ -1,6 +1,6 @@
 class config:
     BOT_TOKEN = ""
-    APP_ID = ""
+    API_ID = ""
     API_HASH = ""
     DATABASE_URL = ""
     SUDO_USERS = "" # Sepearted by space.
