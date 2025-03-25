@@ -4,7 +4,7 @@ import datetime
 import time
 from pyrogram import Client
 from pyrogram.raw.functions import Ping
-from bot.config import config  # Ensure config.py is properly structured
+from bot.config import Config  # Ensure config.py is properly structured
 
 # Logging setup
 logging.basicConfig(
@@ -15,10 +15,10 @@ LOGGER = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 # Fetching Environment Variables
-API_ID = int(os.getenv("API_ID", config.API_ID))  # Ensure API_ID is an integer
-API_HASH = os.getenv("API_HASH", config.API_HASH)
-BOT_TOKEN = os.getenv("BOT_TOKEN", config.BOT_TOKEN)
-DOWNLOAD_DIRECTORY = os.getenv("DOWNLOAD_DIRECTORY", config.DOWNLOAD_DIRECTORY)
+API_ID = int(os.getenv("API_ID", Config.API_ID))  # Ensure API_ID is an integer
+API_HASH = os.getenv("API_HASH", Config.API_HASH)
+BOT_TOKEN = os.getenv("BOT_TOKEN", Config.BOT_TOKEN)
+DOWNLOAD_DIRECTORY = os.getenv("DOWNLOAD_DIRECTORY", Config.DOWNLOAD_DIRECTORY)
 
 # Ensure directory exists
 if not os.path.isdir(DOWNLOAD_DIRECTORY):
