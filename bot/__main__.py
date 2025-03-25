@@ -1,3 +1,4 @@
+import so
 from pyrogram import Client
 
 app = Client(
